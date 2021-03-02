@@ -1,5 +1,5 @@
 #!./venv/bin/python
-from gg.cli import cli
+from chk.cli import cli
 
 if __name__ == '__main__':
     cli()
