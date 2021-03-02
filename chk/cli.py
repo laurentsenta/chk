@@ -95,11 +95,14 @@ def ls(target: str):
 
         mapping[src].append(dir)
 
+        log_sync(src, path.abspath(dir))
+
     for (k, v) in mapping.items():
         print('*', k)
 
         for x in v:
             print('\t->', x[len(target) + 1:])
+
 
 
 @cli.command()

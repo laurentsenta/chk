@@ -21,16 +21,17 @@ def log_sync(src: str, destination: str):
     try:
         with open(CONFIG_SYNC_LIST, 'r') as f:
             y = yaml.safe_load(f)
-
-            if src not in y:
-                y[src] = {destination: datetime.now()}
-            else:
-                y[src][destination] = datetime.now()
-
-        with open(CONFIG_SYNC_LIST, 'w') as f:
-            return yaml.dump(y, f)
     except FileNotFoundError:
-        return {}
+        y = {}
+
+
+    if src not in y:
+        y[src] = {destination: datetime.now()}
+    else:
+        y[src][destination] = datetime.now()
+
+    with open(CONFIG_SYNC_LIST, 'w') as f:
+        return yaml.dump(y, f)
 
 
 def load_aliases():
