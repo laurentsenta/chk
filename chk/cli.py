@@ -104,12 +104,13 @@ def ls(target: str):
             print('\t->', x[len(target) + 1:])
 
 
-
 @cli.command()
 @click.argument('src')
-@click.argument('dst')
+@click.argument('dst', default=None, type=str, required=False)
 def clone(src: str, dst: str):
     """Clone a module from SRC to DST."""
+    if dst is None:
+        dst = getcwd()
     destination = path.abspath(dst)
     # TODO: replace with false this is just for testing:
     makedirs(destination, exist_ok=True)
@@ -156,11 +157,13 @@ def alias():
 
 
 @alias.command()
-@click.argument('folder')
 @click.argument('name')
-def add(folder, name):
+@click.argument('target', default=None, type=str, required=False)
+def add(name, target):
     """Alias a PATH to a simpler NAME."""
-    target = path.abspath(folder)
+    if target is None:
+        target = getcwd()
+    target = path.abspath(target)
 
     if not path.exists(target):
         raise FileNotFoundError(target)
